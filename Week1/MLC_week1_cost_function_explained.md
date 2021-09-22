@@ -19,7 +19,8 @@
 
 ## Cost function - a deeper look
 + *Determines* parameters and then get the value of hypothesis.
-+ The optimzation objective for the learning algorithm is find the value of $\theta_{1}$ which minimizes $J(/theta_{1})$.
++ **Goal**: learn parameters to minimum mistakes/error.
+  - The optimization objective for the learning algorithm is find the value of $\theta_{0}, \theta_{1}$ which minimizes $J(\theta_{0}, \theta_{1})$.
 
 ## Cost function Intuition 
 + Consider:
@@ -32,6 +33,9 @@
     ![cost function intuition](./figures/cost_function_intuition1.png)
 
 + Consider 2 variables $\theta_{1}, \theta_{0}$: 
+    - The cost function for linear regression is always going to be a bowl shape (**convex function**).
+      - A bowl shape function has only 1 local global optimum.
+
     - **Contour plots**: A cost function that maybe looks like:
 
     ![cost function with 2 variables](./figures/cost_func_2_variables.png)

@@ -170,6 +170,12 @@ $\frac{\partial}{\partial\theta_{j}}J(\theta_{0}, \theta_{1}) = \frac{\partial}{
 + Apply Gradient descent algorithm:
     - repeat until convergence:
 
-        $\theta_{0} := \theta_{0} - \alpha\frac{1}{m}\sum_{i=1}^{m}(h_{\theta}(x^{(i)}) -y^{(i)}$
+        $\theta_{0} := \theta_{0} - \alpha\frac{\partial}{\partial\theta_{0}}J(\theta_{0}, \theta_{1}) := \theta_{0} - \alpha\frac{1}{m}\sum_{i=1}^{m}(h_{\theta}(x^{(i)}) -y^{(i)})$
 
-        $\theta_{1} := \theta_{1} - \alpha\frac{1}{m}\sum_{i=1}^{m}(h_{\theta}(x^{(i)}) -y^{(i)}).(x^{(i)})$
+        $\theta_{1} := \theta_{1} - \alpha\frac{\partial}{\partial\theta_{1}}J(\theta_{0}, \theta_{1}) := \theta_{1} - \alpha\frac{1}{m}\sum_{i=1}^{m}(h_{\theta}(x^{(i)}) -y^{(i)}).(x^{(i)})$
+
+### 7.1 Batch Gradient Descent
++ **Batch**: each step of gradient descent uses all the training examples.
+    - Each step, we look at all the training data. The computing over *m* training examples.
+    - Sometime, we just lock at small data subsets.
+  
