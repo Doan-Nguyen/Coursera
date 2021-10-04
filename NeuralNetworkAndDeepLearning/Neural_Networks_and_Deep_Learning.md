@@ -26,6 +26,14 @@
     - [Activation functions](#activation-functions)
     - [Why do you need non-linear activation functions ?](#why-do-you-need-non-linear-activation-functions-)
   - [Gradient descent for Neural Networks](#gradient-descent-for-neural-networks)
+  - [Deep Neural Networks](#deep-neural-networks)
+    - [Deep L-layer neural network](#deep-l-layer-neural-network)
+    - [Forward Propagation in a Deep Network](#forward-propagation-in-a-deep-network)
+    - [Getting your matrix dimension right](#getting-your-matrix-dimension-right)
+    - [Why deep representations ?](#why-deep-representations-)
+    - [Building blocks of deep neural networks](#building-blocks-of-deep-neural-networks)
+    - [Forward and Backward Propagation](#forward-and-backward-propagation)
+    - [Parameters vs Hyper-parameters](#parameters-vs-hyper-parameters)
 - [Reference:](#reference)
 
 ## Introduction to deep learning
@@ -460,8 +468,118 @@
   
     $J(W^{[1]}, b^{[1]}, W^{[2]}, b^{[2]}) = \frac{1}{m} \sum^{m}_{i=1}l(\hat{y}, y)$
 
-- Gradient Descent for neural networks:
+- Gradient Descent:
+  
+    - Repeat:
+        
+      - compute predictions $\hat{y}^{(i)}$ for i = 1, ..., m
+        
+      - $dW^{[1]} = \frac{\sigma J}{\sigma W^{[1]}}, db^{[1]} = \frac{\sigma J}{\sigma b^{[1]}}$
+
+      - $W^{[1]} = W^{[1]} - \alpha d W^{[1]}$
+
+      - $b^{[1]} = b^{[1]} - \alpha d b^{[1]}$
+
+- Formulas for computing derivatives:
+
+    - consider computation graph: 
     
+        ![](figures/22.png)
+    
+    - Forward propagation:
+      
+        - $z^{[1]} = W^{[1]}x + b^{[1]}$
+
+        - $a^{[1]} = g^{[1]}(z^{[1]})$
+
+        - $z^{[2]} = W^{[2]}a^{[1]} + b^{[2]}$
+
+        - $a^{[2]} = g^{[1]}(z^{[2]})$
+
+    - Backward propagation:
+      
+      - $dz^{[2]} = a^{[2]} - y$
+
+      - $dW^{[2]} = \frac{1}{m} dz^{[2]} a^{[1]T}$
+
+      - $b^{[2]} = \frac{1}{m} np.sum(dz^{[2]}, axis=1, keepdims=True)$; keepdims return a rank 1 array (n, )
+
+      - $dz^{[1]} = W^{[2]T}dz^{[2]}.\hat{g(z)}(z^{[1]})$;  "." is the element-wise product
+
+      - $dW^{[1]} = \frac{1}{m} = dz^{[1]} x^{T}$
+
+      - $b^{[1]} = \frac{1}{m} np.sum(dz^{[1]}, axis=1, keepdims=True)$
+
+
+## Deep Neural Networks
+
+### Deep L-layer neural network
+- A deep neural network is simply a network with more than 1 hidden layer.
+
+- Notation:
+  - $L$: the number of layers in the networks
+  - $n^{[l]}$: the number of units/neurons in layer *l*
+  - $a^{[l]}$: the activations in layer *l*
+  - $W^{[l]}, b^{[l]}$: the weights and bias in layer *l*
+  - $x=a^{[0]}$ and $\hat{y} = a^{[L]}$
+### Forward Propagation in a Deep Network
+- For each layer *l* we perform the computations:
+    
+    $z^{[l]} = W^{[l]}a^{[l-1]} + b^{[l]}$
+
+    $a^{[l]} = g^{[l]}(z^{[l]})$
+
+
+### Getting your matrix dimension right 
+- The best way to debug your matrices dimensions is "by hand".
+- For a *l*-layer neural network & *m* - the number of inputs, our dimensions:
+    - $W^{[l]}: (n^{[l]}, n^{[l-1]})$
+    - $b^{[l]}: (n^{[l]}, 1)$
+    - $z^{[l]}, a^{[l]}, dz^{[l]}, da^{[l]}: (n^{[l]}, m)$
+
+### Why deep representations ? 
+- Deep neural network makes relations with data from simpler to complex. In each layer it tries to make a relation with the previous layer. Example:
+    - Face recognition application:
+        - image -> edges -> face parts -> faces -> desired face
+    - Audio recognition application: 
+        - audio -> low level sound features -> phonemes -> words -> sentences
+- Circuit theory and deep learning:
+    - Circuit theory provides a possible explanation as to why deep networks work so well some tasks.
+
+### Building blocks of deep neural networks 
+- Consider an example:
+  
+    ![](figures/23.png)
+
+
+### Forward and Backward Propagation
+- Pseudo code for forward propagation for layer *l*:
+  
+    ![](figures/24.png)
+
+    - $z^{[l]} = W^{[l]}a^{[l-1]} + b^{[l]}$
+    - $a^{[l]} = g^{[l]}(z^{[l]})$
+
+- Pseudo code for backward propagation for layer *l*:
+
+    ![](figures/25.png)
+
+    - $dz^{[l-1]} = (W^{[l]T}*dz^{[l]})*\hat{g^{[l]}}(z^{[l-1]})$
+    - $dW^{[l]} = \frac{(dz^{[l]}*a^{[l-1]T})}{m}$
+    - $db^{[l]} = \frac{(dz^{[l]}*a^{[l-1]T})}{m}$
+    - $da^{[l-1]} = W^{[l]T}*dz^{[l]}$
+
+- Every computation in forward propagation is a corresponding computation in backwards propagation.
+  
+    ![](figures/26.png)
+### Parameters vs Hyper-parameters
+- The **parameters** of model are the *adaptive* values (W, b) which are *learned during training process*.
+- The **hyperparameters** are *set before training* & can be viewed as the "settings" of the learning algorithms.
+  - number of iterations
+  - learning rate
+  - number of hidden layers *L*
+  - number of hidden units $n^{[1]}, n^{[2]}, ...$
+  - activation function
 
 # Reference:
 
