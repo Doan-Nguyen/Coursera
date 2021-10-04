@@ -437,7 +437,31 @@
 - The purposed of the activation function is to introduce *non-linear into the network* which allows you to model a response variable that varies non-linearly with its explanatory variables.
 
 ## Gradient descent for Neural Networks
-- Consider a simple 2-layer neural network
+- Consider a simple 2-layer neural network. Recall:
+  
+    - Parameters: $W^{[1]}, b^{[1]}, W^{[2]}, b^{[2]}$
+    
+    - Number of features: $n_x = n^{[0]}$
+    
+    - Number of hidden units: $n^{[1]}$ 
+
+    - Number of output units: $n^{[2]}$
+
+- Dimensions:
+    - $W^{[1]}$: $(n^{[1]}, n_x)$
+
+    - $b^{[1]}$: $(n_x, 1)$
+
+    - $W^{[2]}$: $(n^{[2]} , n^{[1]})$
+  
+    - $b^{[2]}$ $(n^{[2]}, 1)$
+
+- Cost function:
+  
+    $J(W^{[1]}, b^{[1]}, W^{[2]}, b^{[2]}) = \frac{1}{m} \sum^{m}_{i=1}l(\hat{y}, y)$
+
+- Gradient Descent for neural networks:
+    
 
 # Reference:
 
